@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table, th, td{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+<body>
+    <center> 
+        <table>
+   <h1>My Activity Schedule</h1>
+    <tbody>
+        <table>
+       <tr>
+        <th>No</th>
+        <th>Activity</th> 
+        <th>Time</th>
+        <th>Type</th> 
+        <th colspan="2" >Action</th>                
+        </tr>
+        <tbody id="output">
+        </tbody>
+        </table>
+        </table>
+    
+    </center>
+ 
+</body>
+<script>
+var arrActivity = [
+    { no: 1, activity: "Running", time: "10 PM", type: "Sport"},
+    { no: 2, activity: "Coding", time: "6 AM", type: "Skill"},
+    { no: 3, activity: "Dance", time: " 10 Am", type: "Sport and Skill"}
+    ];
+
+    
+
+    function showList(arrActivity, param){  
+        var newArr = arrActivity.map((val, i) => { 
+            if (i === param ){
+                return( 
+                `
+              <tr>
+                <td>${val.no}</td>
+                <td><input type="text" id="editAct" value=${val.activity}></td>
+                <td><input type="text" id="editTime" value=${val.time}></td>
+                <td><input type="text" id="editType" value= ${val.type}></td>
+                <td><button onclick="confirmEdit(${i})">Save</button></td>
+                <td><button>Cancel</button></td>
+              </tr>
+            `
+                )
+            }
+
+            else{
+            return(
+                `
+                <tr>
+                    <td>${val.no}</td>
+                     <td>${val.activity}</td>
+                     <td>${val.time}</td>
+                     <td>${val.type}</td>
+                     <td><button onclick="deleteData(${i})">Delete</button>
+                     <td><button onclick="editData(${i})">Edit</button>
+                </tr>
+                `
+            )
+            }
+        })
+        return document.getElementById("output").innerHTML=newArr.join("");
+    }
+    showList(arrActivity);
+
+    function editData(index){
+      showList(arrActivity, index)
+    }
+
+    function confirmEdit(index){
+      var newactivity, newtime, newtype;
+      newActivity = document.getElementById('editAct').value;
+      newTime = document.getElementById('editTime').value;
+      newType = document.getElementById('editType').value;
+
+      arrActivity[index].activity = newActivity;
+      arrActivity[index].time = newTime;
+      arrActivity[index].type = newType;
+
+      showList(arrActivity);
+    }
+    
+    
+    function deleteData(index) {
+    arrActivity.splice(index, 1);
+    showList(arrActivity);
+    }
+    
+
+</script>
+</html>
